@@ -41,7 +41,7 @@ class PersonTest {
         try {
             persons.add(new Manager("Jea", -25, 47500));
         } catch (IllegalArgumentException e) {
-            assertEquals(e.getMessage(), "Age must be non-negative.");
+            assertEquals(e.getMessage(), "Age must be non-negative");
         }
         assertEquals(persons.size(), 1);
     }

@@ -18,39 +18,43 @@ public class Main {
     public static void giveRaise(List<Person> persons, String manager, String employee, double salary)  {
         Employee emp = null;
         Manager mng = null;
-        boolean flag = false;
-        boolean flag2 = false;
+        boolean flag1 = false, flag2 = false;
+        boolean flag_Man = false, flag_Emp = false;
         for(Person p : persons) {
-            if(employee == p.getName()) {
+            if(employee.equals(p.getName())) {
                 if(p instanceof Employee) {
-                    flag2 = true;
+                    flag_Emp = true;
                     emp = (Employee) p;
                 }
-                flag = true;
+                flag1 = true;
             }
         }
 
         for(Person p : persons) {
-            if(manager == p.getName()) {
+            if(manager.equals(p.getName())) {
                 if(p instanceof Manager) {
-                    flag2 = true;
-                    mng = (Manager) p;
+                    flag_Man = true;
+                    mng = (Manager)p;
                 }
-                flag = true;
+                flag2 = true;
             }
         }
 
-        if (!flag) {
-            throw new NoSuchElementException("name does not exist");
-        } else if (!flag2) {
-            throw new ClassCastException("name is not a/n type");
-        } else {
-            try {
-                mng.giveRaise(emp, salary);
-            } catch (IllegalArgumentException e) {
-                System.out
+        if (!flag1 || !flag2) {
+            if(!flag1) {
+                throw new NoSuchElementException(employee + " does not exist");
+            } else {
+                throw new NoSuchElementException(manager + " does not exist");
             }
 
+        } else if (!flag_Man || !flag_Emp) {
+            if(!flag_Man) {
+                throw new ClassCastException(manager + " is not a manager");
+            } else {
+                throw new ClassCastException(employee + " is not an employee");
+            }
+        } else {
+            mng.giveRaise(emp, salary);
         }
 
 
@@ -66,7 +70,45 @@ public class Main {
      * @throws IllegalStateException when developer already has a manager
      */
     public static void assignPM(List<Person> persons, String developer, String manager) {
+        Developer emp = null;
+        Manager mng = null;
+        boolean flag1 = false, flag2 = false;
+        boolean flag_Man = false, flag_Emp = false;
+        for(Person p : persons) {
+            if(developer.equals(p.getName())) {
+                if(p instanceof Developer) {
+                    flag_Emp = true;
+                    emp = (Developer) p;
+                }
+                flag1 = true;
+            }
+        }
 
+        for(Person p : persons) {
+            if(manager.equals(p.getName())) {
+                if(p instanceof Manager) {
+                    flag_Man = true;
+                    mng = (Manager)p;
+                }
+                flag2 = true;
+            }
+        }
+
+        if (!flag1 || !flag2) {
+            if(!flag1) {
+                throw new NoSuchElementException(developer + " does not exist");
+            } else {
+                throw new NoSuchElementException(manager + " does not exist");
+            }
+        } else if (!flag_Man || !flag_Emp) {
+            if(!flag_Man) {
+                throw new ClassCastException(manager + " is not a manager");
+            } else {
+                throw new ClassCastException(developer + " is not a developer");
+            }
+        } else {
+            emp.setProjectManager(mng);
+        }
     }
 
     /**
@@ -79,6 +121,47 @@ public class Main {
      * @throws NoSuchElementException when given customer or employee is not in the list of persons
      */
     public static String customerSpeak(List<Person> persons, String customer, String employee) {
-        return null;
+        Customer cus = null;
+        Employee emp = null;
+        boolean flag1 = false, flag2 = false;
+
+        boolean flag_Cus = false, flag_Emp = false;
+        for(Person p : persons) {
+            if(customer.equals(p.getName())) {
+                if(p instanceof Customer) {
+                    flag_Cus = true;
+                    cus = (Customer)p;
+                }
+                flag2 = true;
+            }
+        }
+
+        for(Person p : persons) {
+            if(employee.equals(p.getName())) {
+                if(p instanceof Employee) {
+                    flag_Emp = true;
+                    emp = (Employee)p;
+                }
+                flag1 = true;
+            }
+        }
+        if (!flag1 || !flag2) {
+            if (!flag1) {
+                throw new NoSuchElementException(employee+ " does not exist");
+            } else {
+                throw new NoSuchElementException(customer + " does not exist");
+            }
+
+        } else if(!flag_Cus || !flag_Emp) {
+            if(!flag_Cus) {
+                throw new ClassCastException(customer + " is not a customer");
+            } else {
+                throw new ClassCastException(employee + " is not an employee");
+            }
+        } else {
+            return cus.speak(emp);
+        }
+
+
     }
 }
