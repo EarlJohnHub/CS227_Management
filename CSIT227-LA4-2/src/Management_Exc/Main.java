@@ -70,7 +70,7 @@ public class Main {
      * @throws IllegalStateException when developer already has a manager
      */
     public static void assignPM(List<Person> persons, String developer, String manager) {
-        Developer emp = null;
+        Developer dev = null;
         Manager mng = null;
         boolean flag1 = false, flag2 = false;
         boolean flag_Man = false, flag_Emp = false;
@@ -78,7 +78,7 @@ public class Main {
             if(developer.equals(p.getName())) {
                 if(p instanceof Developer) {
                     flag_Emp = true;
-                    emp = (Developer) p;
+                    dev = (Developer) p;
                 }
                 flag1 = true;
             }
@@ -107,7 +107,7 @@ public class Main {
                 throw new ClassCastException(developer + " is not a developer");
             }
         } else {
-            emp.setProjectManager(mng);
+            dev.setProjectManager(mng);
         }
     }
 
